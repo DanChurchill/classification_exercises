@@ -7,3 +7,5 @@ iris.csv
 telco.csv
 *.csv
 acquire_lesson.ipynb
+*.xlsx
+
