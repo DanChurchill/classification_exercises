@@ -55,7 +55,7 @@ def get_telco_data():
                     JOIN customer_payments
                     USING(customer_id)
                     JOIN internet_service_types
-                    USING(internet_service_type_id))''', get_connection('telco_churn'))
+                    USING(internet_service_type_id)''', get_connection('telco_churn'))
     # Write that dataframe to disk for later. Called "caching" the data for later.
         df.to_csv(filename, index=False)
         return df
