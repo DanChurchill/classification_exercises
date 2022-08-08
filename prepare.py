@@ -1,4 +1,6 @@
 import pandas as pd
+from sklearn.model_selection import train_test_split
+
 
 
 
@@ -20,10 +22,10 @@ def prep_iris(df):
 
 def prep_titanic(df):
     # Drop unnecessary columns (pclass)
-    df = df.drop(columns=['pclass'])
+    df = df.drop(columns=['class'])
 
     # Create dummy variables of the categorical columns    
-    dummy_df = pd.get_dummies(df[['sex','class','embark_town']], dummy_na=False, drop_first=False)
+    dummy_df = pd.get_dummies(df[['sex', 'embark_town']], dummy_na=False, drop_first=False)
 
     # concatenate onto the titanic dataframe.
     df = pd.concat([df, dummy_df], axis=1)
@@ -45,3 +47,38 @@ def prep_telco(df):
     # return prepared dataframe
     return df
     
+def split_titanic(df):
+    '''
+    Take in a dataframe and return train, validate, and test dataframes
+    '''
+    
+    train_validate, test = train_test_split(df, test_size=.2, stratify=df.survived)
+
+    train, validate = train_test_split(train_validate, 
+                                       test_size=.25, 
+                                       stratify=train_validate.survived)
+    return train, validate, test
+
+def split_iris(df):
+    '''
+    Take in a dataframe and return train, validate, and test dataframes
+    '''
+    
+    train_validate, test = train_test_split(df, test_size=.2, stratify=df.species)
+
+    train, validate = train_test_split(train_validate, 
+                                       test_size=.25, 
+                                       stratify=train_validate.species)
+    return train, validate, test
+
+def split_telco(df):
+    '''
+    Take in a dataframe and return train, validate, and test dataframes
+    '''
+    
+    train_validate, test = train_test_split(df, test_size=.2, stratify=df.churn)
+
+    train, validate = train_test_split(train_validate, 
+                                       test_size=.25, 
+                                       stratify=train_validate.churn)
+    return train, validate, test
