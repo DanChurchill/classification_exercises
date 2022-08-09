@@ -48,7 +48,7 @@ def prep_telco(df):
     function accepts a dataframe of telco data and performs the cleanup
     operations dictated by the exercises
     '''
-    
+
     # Drop unnecessary, unhelpful, or duplicated columns. 
     df = df.drop(columns=['contract_type_id','internet_service_type_id', 'payment_type_id', 'contract_type_id.1',
                           'payment_type_id.1', 'monthly_charges.1','total_charges.1','paperless_billing.1',])
@@ -62,38 +62,18 @@ def prep_telco(df):
     # return prepared dataframe
     return df
     
-def split_titanic(df):
-    '''
-    Take in a dataframe and return train, validate, and test dataframes
-    '''
+
     
-    train_validate, test = train_test_split(df, test_size=.2, stratify=df.survived)
+def my_split(df, target):
+    '''
+    takes a dataframe and a string (the column name of the target)
+    returns 3 datframes of train, validate, and test data
+    '''
+    train_validate, test = train_test_split(df, test_size=.2, stratify=df[target])
 
     train, validate = train_test_split(train_validate, 
                                        test_size=.25, 
-                                       stratify=train_validate.survived)
+                                       stratify=train_validate[target])
+
     return train, validate, test
 
-def split_iris(df):
-    '''
-    Take in a dataframe and return train, validate, and test dataframes
-    '''
-    
-    train_validate, test = train_test_split(df, test_size=.2, stratify=df.species)
-
-    train, validate = train_test_split(train_validate, 
-                                       test_size=.25, 
-                                       stratify=train_validate.species)
-    return train, validate, test
-
-def split_telco(df):
-    '''
-    Take in a dataframe and return train, validate, and test dataframes
-    '''
-    
-    train_validate, test = train_test_split(df, test_size=.2, stratify=df.churn)
-
-    train, validate = train_test_split(train_validate, 
-                                       test_size=.25, 
-                                       stratify=train_validate.churn)
-    return train, validate, test
