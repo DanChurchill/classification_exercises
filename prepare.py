@@ -5,6 +5,10 @@ from sklearn.model_selection import train_test_split
 
 
 def prep_iris(df):
+    '''
+    function accepts a dataframe of iris data and performs the cleanup
+    operations dictated by the exercises
+    '''
     # Drop the species_id and measurement_id columns
     df = df.drop(columns=['species_id','measurement_id'])
     
@@ -20,7 +24,13 @@ def prep_iris(df):
     # return the converted iris dataframe
     return df
 
+
+
 def prep_titanic(df):
+    '''
+    function accepts a dataframe of titanic data and performs the cleanup
+    operations dictated by the exercises
+    '''
     # Drop unnecessary columns (pclass)
     df = df.drop(columns=['class'])
 
@@ -34,6 +44,11 @@ def prep_titanic(df):
     return df
 
 def prep_telco(df):
+    '''
+    function accepts a dataframe of telco data and performs the cleanup
+    operations dictated by the exercises
+    '''
+    
     # Drop unnecessary, unhelpful, or duplicated columns. 
     df = df.drop(columns=['contract_type_id','internet_service_type_id', 'payment_type_id', 'contract_type_id.1',
                           'payment_type_id.1', 'monthly_charges.1','total_charges.1','paperless_billing.1',])
