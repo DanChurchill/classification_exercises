@@ -12,13 +12,12 @@ def get_titanic_data():
     if os.path.isfile(filename):
         return pd.read_csv(filename)
     
-    # if file not available locally, acquire data from SQL database
-    # and write it as csv locally for future use
+    # if file not available locally, acquire data from SQL database and write it as csv locally for future use
     else:
         # read the SQL query into a dataframe
         df = pd.read_sql('SELECT * FROM passengers', get_connection('titanic_db'))
         # Write that dataframe to disk for later. Called "caching" the data for later.
-        df.to_csv(filename, index=False)
+        # df.to_csv(filename, index=False)
         return df
 
 def get_iris_data():
