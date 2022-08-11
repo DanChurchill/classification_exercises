@@ -52,18 +52,40 @@ def prep_telco(df):
     function accepts a dataframe of telco data and performs the cleanup
     operations dictated by the exercises
     '''
+def prep_telco(df):
+    '''
+    function accepts a dataframe of telco data and performs the cleanup
+    operations dictated by the exercises
+    '''
 
-    # Drop unnecessary, unhelpful, or duplicated columns. 
-    df = df.drop(columns=['contract_type_id','internet_service_type_id', 'payment_type_id', 'contract_type_id.1',
-                          'payment_type_id.1', 'monthly_charges.1','total_charges.1','paperless_billing.1'])
-
-    # Create dummy variables of the categorical columns  
-    dummy_df = pd.get_dummies(df[['gender','contract_type','internet_service_type']], dummy_na=False, drop_first=False)
-
-    # concatenate onto the telco dataframe.
-    df = pd.concat([df, dummy_df], axis=1)
-
-    # return prepared dataframe
+    # delete index columns
+    df = df.drop(columns=['internet_service_type_id', 'payment_type_id', 'contract_type_id', 'customer_id'])
+    
+    # convert total charges to floats
+    df.total_charges = df.total_charges.str.replace(' ', '0')
+    df.total_charges = df.total_charges.astype(float)
+    
+    # create dummies for binary columns and concat to df
+    dummies = pd.get_dummies(df[['churn', 'gender','senior_citizen', 'partner', 'dependents', 'phone_service',
+                                 'paperless_billing']], drop_first=True)
+    df = pd.concat([df, dummies], axis=1)
+    
+    dummies = pd.get_dummies(df[['multiple_lines', 'online_security', 'online_backup','device_protection',
+                                 'tech_support', 'streaming_tv', 'streaming_movies', 'contract_type', 'payment_type',
+                                 'internet_service_type']], drop_first=False)
+    df = pd.concat([df, dummies], axis=1)
+    
+    # delete columns where dummies were created
+    df = df.drop(columns=['churn', 'gender','senior_citizen', 'partner', 'dependents', 'phone_service',
+                                 'paperless_billing', 'multiple_lines', 'online_security', 'online_backup',
+                                 'device_protection', 'tech_support', 'streaming_tv', 'streaming_movies', 
+                                 'contract_type', 'payment_type','internet_service_type'])
+    
+    # clean up column names
+    df.rename(columns={'churn_Yes' : 'churn', 'gender_Male': 'male', 'partner_Yes' : 'partner',
+                       'dependents_Yes':'dependents', 'phone_service_Yes' : 'phone_service', 
+                       'paperless_billing_yes':'paperless_billing'}, inplace=True)
+    
     return df
     
 
