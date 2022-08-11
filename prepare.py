@@ -66,7 +66,7 @@ def prep_telco(df):
     df.total_charges = df.total_charges.astype(float)
     
     # create dummies for binary columns and concat to df
-    dummies = pd.get_dummies(df[['churn', 'gender','senior_citizen', 'partner', 'dependents', 'phone_service',
+    dummies = pd.get_dummies(df[['churn', 'gender', 'partner', 'dependents', 'phone_service',
                                  'paperless_billing']], drop_first=True)
     df = pd.concat([df, dummies], axis=1)
     
@@ -76,7 +76,7 @@ def prep_telco(df):
     df = pd.concat([df, dummies], axis=1)
     
     # delete columns where dummies were created
-    df = df.drop(columns=['churn', 'gender','senior_citizen', 'partner', 'dependents', 'phone_service',
+    df = df.drop(columns=['churn', 'gender', 'partner', 'dependents', 'phone_service',
                                  'paperless_billing', 'multiple_lines', 'online_security', 'online_backup',
                                  'device_protection', 'tech_support', 'streaming_tv', 'streaming_movies', 
                                  'contract_type', 'payment_type','internet_service_type'])
