@@ -16,10 +16,10 @@ def prep_iris(df):
     df.rename(columns = {'species_name':'species'}, inplace = True)
     
     # Create dummy variables of the species name    
-    dummy_df = pd.get_dummies(df['species'], dummy_na=False, drop_first=True)
+    # dummy_df = pd.get_dummies(df['species'], dummy_na=False, drop_first=True)
 
     # concatenate onto the iris dataframe.
-    df = pd.concat([df, dummy_df], axis=1)
+    # df = pd.concat([df, dummy_df], axis=1)
     
     # return the converted iris dataframe
     return df
